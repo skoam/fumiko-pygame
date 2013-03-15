@@ -31,6 +31,7 @@ def main():
 	FPSCLOCK = pygame.time.Clock() 
 	
 	# Converting these Images will make the drawing much faster
+	IMAGE_LIBRARY['Boss_A'] = IMAGE_LIBRARY['Boss_A'].convert_alpha()
 	IMAGE_LIBRARY['empty'] = IMAGE_LIBRARY['empty'].convert_alpha()
 	IMAGE_LIBRARY['Object_Rock'] = IMAGE_LIBRARY['Object_Rock'].convert_alpha()
 	IMAGE_LIBRARY['Object_Grass'] = IMAGE_LIBRARY['Object_Grass'].convert_alpha()
@@ -144,6 +145,16 @@ def main():
 	
 	################## OBJECTS #####################
 	
+	# A bigger Object
+	
+	Monster = Object()
+	Monster.X = WINDOWWIDTH / 2 + WINDOWWIDTH / 8
+	Monster.Sprite = IMAGE_LIBRARY['Boss_A']
+	Monster.Width = int(Monster.Sprite.get_width() * scale_X)
+	Monster.Height = int(Monster.Sprite.get_height() * scale_Y)
+	Monster.Sprite = pygame.transform.scale(Monster.Sprite, (Monster.Width, Monster.Height))
+	Monster.Rect = Monster.build_rectangle()
+	
 	# A bunch of Rocks
 	
 	Rock = Object()
@@ -198,6 +209,7 @@ def main():
 	LIST_OF_OBJECTS.append(Grass2)
 	LIST_OF_OBJECTS.append(Grass3)
 	LIST_OF_OBJECTS.append(Grass4)
+	LIST_OF_OBJECTS.append(Monster)
 	
 	while True: # main game loop
 		# BASICFONT = pygame.font.Font('Qlassik_TB.otf', 10)
