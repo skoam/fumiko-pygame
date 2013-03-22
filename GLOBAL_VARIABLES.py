@@ -21,5 +21,5 @@ GRAY = (100, 100, 100)
 
 bgColor = GRAY
 
-PLAYER_LIST = []
+
 LIST_OF_OBJECTS = []

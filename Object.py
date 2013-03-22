@@ -1,24 +1,21 @@
-import pygame, GLOBAL_VARIABLES
+import pygame
 from pygame.locals import *
-from GLOBAL_VARIABLES import *
 
 class Object():
-	X = 0
-	Y = 0
-	Width = 32 # determined by the charset
-	Height = 32 # determined by the charset
-	Weight = 10 * (float(WINDOWHEIGHT / 600))# Basic Weight of Objects scaled to the resolution
+	def __init__(self):
+		self.X = 0
+		self.Y = 0
+		self.Width = 32 # determined by the charset
+		self.Height = 32 # determined by the charset
+		self.Weight = 10 # Basic Weight of Objects
 	
-	Rect = pygame.Rect(0,0,0,0)
-	Sprite = pygame.Surface((0,0))
+		self.Rect = pygame.Rect(0,0,0,0)
+		self.Sprite = pygame.Surface((0,0))
 	
-	WIDTH_ON_SCREEN = Width * (WINDOWWIDTH / 320)
-	HEIGHT_ON_SCREEN = Height * (WINDOWHEIGHT / 240)
-	
-	moveDown = False
-	moveLeft = False
-	moveRight = False
-	moveUp = False
+		self.moveDown = False
+		self.moveLeft = False
+		self.moveRight = False
+		self.moveUp = False
 	
 	def build_rectangle(self):
 		Rectangle = pygame.Rect(self.X, self.Y, self.Width, self.Height)
@@ -32,3 +29,4 @@ class Object():
 	def Move(self, Level):
 		if self.moveDown:
 			self.Y += self.Weight
+	

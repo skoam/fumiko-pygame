@@ -1,57 +1,55 @@
-import pygame, GLOBAL_VARIABLES
+import pygame
 from pygame.locals import *
-from GLOBAL_VARIABLES import *
+# from GLOBAL_VARIABLES import *
 
 # WINDOWWIDTH = 640
 # WINDOWHEIGHT = 480
 
 class Player():
-	WALKSPEED = WINDOWWIDTH / 160
-	RUNSPEED = WINDOWWIDTH / 80
-	JUMPSPEED = WINDOWWIDTH / 100
+	def __init__(self):
+		self.WALKSPEED = 2 # default walkspeed
+		self.RUNSPEED = 4 # default runspeed
+		self.JUMPSPEED = 3 # default jumpspeed
 	
-	AnimationSpeed = 100
-	time_since_last_update = 0
+		self.AnimationSpeed = 100
 	
-	Name = ""
-	Health = 0
-	Mana = 0
-	X = 0
-	Y = 0
-	Height = 32
-	Width = 24
-	moveSpeed = 0
-	Charset = pygame.Surface((0, 0))
-	currentFrame = pygame.Surface((0, 0))
+		self.Name = ""
+		self.Health = 0
+		self.Mana = 0
+		self.X = 0
+		self.Y = 0
+		self.Height = 32
+		self.Width = 24
+		self.moveSpeed = 0
+		self.Charset = pygame.Surface((0, 0))
+		self.currentFrame = pygame.Surface((0, 0))
 	
-	Weight = 5 # For Gravity
-	currentTileHeight = 0 # TILE the player stands on
+		self.Weight = 5 # For Gravity
+		self.currentTileHeight = 0 # TILE the player stands on
 	
-	moveDown = False
-	moveUp = False
-	moveLeft = False
-	moveRight = False
+		self.moveDown = False
+		self.moveUp = False
+		self.moveLeft = False
+		self.moveRight = False
 	
-	Jump = False
-	JumpHeight = 0
+		self.Jump = False
+		self.JumpHeight = 0
 
-	Wall_on_Right = False
-	Wall_on_Left = False
+		self.Wall_on_Right = False
+		self.Wall_on_Left = False
 	
-	RunBoost = False
-	RunBoost_Count = 0
+		self.RunBoost = False
+		self.RunBoost_Count = 0
 	
-	#WIDTH_ON_SCREEN = WINDOWWIDTH / 17
-	WIDTH_ON_SCREEN = Width * int(WINDOWWIDTH / 320)
-	# HEIGHT_ON_SCREEN = WINDOWHEIGHT / 9
-	HEIGHT_ON_SCREEN = Height * int(WINDOWHEIGHT / 240)
+		self.Facing = 'Right'
+		self.currentState = 'Waiting'
+		
+		# Player dictionaries to save Player-related data (sprites, animation-lists etc.)
+		self.Frame_Dict = {}
+		self.Animations = 	{}
 	
-	Facing = 'Right'
-	currentState = 	'Waiting'
-	
-	# Player dictionaries to save Player-related data (sprites, animation-lists etc.)
-	Frame_Dict = {}
-	Animations = 	{}
+		self.time_since_last_update = 0
+
 					
 	def draw(self, surface):
 		surface.blit(self.Frame_Dict[self.currentFrame], self.build_rectangle())
@@ -63,12 +61,12 @@ class Player():
 		
 	def build_rectangle(self):
 		# returns the actual rectangle of the player frame
-		Rectangle = pygame.Rect(self.X, self.Y, self.WIDTH_ON_SCREEN, self.HEIGHT_ON_SCREEN)
+		Rectangle = pygame.Rect(self.X, self.Y, self.Width, self.Height)
 		return Rectangle
 		
 	def build_rectangle_with_offset(self, OFFSETX, OFFSETY, BIGGERX, BIGGERY):
 		# returns a modified rectangle of the player (for collision)
-		Rectangle = pygame.Rect(self.X + OFFSETX, self.Y + OFFSETY, self.WIDTH_ON_SCREEN + BIGGERX, self.HEIGHT_ON_SCREEN + BIGGERY)
+		Rectangle = pygame.Rect(self.X + OFFSETX, self.Y + OFFSETY, self.Width + BIGGERX, self.Height + BIGGERY)
 		return Rectangle
 		
 	def build_frame(self, x, y):
@@ -90,14 +88,14 @@ class Player():
 					
 				if self.JumpHeight < 60:
 					if self.RunBoost == True:
-						self.Y -= 7 * (float(WINDOWWIDTH) / 800)
-					self.Y -= 18 * (float(WINDOWHEIGHT) / 600)
+						self.Y -= 7 * (float(self.WINDOWWIDTH) / 800)
+					self.Y -= 18 * (float(self.WINDOWHEIGHT) / 600)
 					self.JumpHeight += 10
 				elif self.JumpHeight < 90:
-					self.Y -= 15 * (float(WINDOWHEIGHT) / 600)
+					self.Y -= 15 * (float(self.WINDOWHEIGHT) / 600)
 					self.JumpHeight += 5
 				elif self.JumpHeight < 120:
-					self.Y -= 12 * (float(WINDOWHEIGHT) / 600)
+					self.Y -= 12 * (float(self.WINDOWHEIGHT) / 600)
 					self.JumpHeight += 4
 			else:
 				if self.Facing == 'Right':
@@ -109,18 +107,20 @@ class Player():
 			self.Y += self.Weight
 			
 		if self.Wall_on_Right == False:
-			if self.moveRight and (self.X + self.WIDTH_ON_SCREEN < WINDOWWIDTH / 2):
+			if self.moveRight and (self.X + self.Width < self.WINDOWWIDTH / 2):
 				self.X += self.moveSpeed
 				self.Wall_on_Left = False
 				#self.Facing = 'Right'
-			elif self.moveRight and (Terrain.Position_Pointer == (len(Terrain.List_of_Tops) * Terrain.SIZE_ON_SCREEN[0]) - WINDOWWIDTH):
+			elif self.moveRight and (Terrain.Position_Pointer == (len(Terrain.List_of_Tops) * Terrain.SIZE_ON_SCREEN[0]) - self.WINDOWWIDTH):
 				self.X += self.moveSpeed
 				self.Wall_on_Left = False
 				#self.Facing = 'Right'
-			elif self.moveRight and (Terrain.Position_Pointer < (len(Terrain.List_of_Tops) * Terrain.SIZE_ON_SCREEN[0]) - WINDOWWIDTH):
+			elif self.moveRight and (Terrain.Position_Pointer < (len(Terrain.List_of_Tops) * Terrain.SIZE_ON_SCREEN[0]) - self.WINDOWWIDTH):
 				Terrain.Position_Pointer += self.moveSpeed
-				for OBJECT in LIST_OF_OBJECTS:
+				for OBJECT in self.LIST_OF_OBJECTS:
 					OBJECT.X -= self.moveSpeed
+				for ENEMY in self.LIST_OF_ENEMIES:
+					ENEMY.X -= self.moveSpeed
 				self.Wall_on_Left = False
 				#self.Facing = 'Right'
 			
@@ -129,25 +129,27 @@ class Player():
 				self.X -= self.moveSpeed
 				self.Wall_on_Right = False
 				#self.Facing = 'Left'
-			elif (self.X + self.WIDTH_ON_SCREEN > WINDOWWIDTH / 2) and self.moveLeft and (Terrain.Position_Pointer == (len(Terrain.List_of_Tops) * Terrain.SIZE_ON_SCREEN[0]) - WINDOWWIDTH):
+			elif (self.X + self.Width > self.WINDOWWIDTH / 2) and self.moveLeft and (Terrain.Position_Pointer == (len(Terrain.List_of_Tops) * Terrain.SIZE_ON_SCREEN[0]) - self.WINDOWWIDTH):
 				self.X -= self.moveSpeed
 				self.Wall_on_Right = False
 				#self.Facing = 'Left'
 			elif self.moveLeft:
-				for OBJECT in LIST_OF_OBJECTS:
+				for OBJECT in self.LIST_OF_OBJECTS:
 					OBJECT.X += self.moveSpeed
+				for ENEMY in self.LIST_OF_ENEMIES:
+					ENEMY.X += self.moveSpeed
 				Terrain.Position_Pointer -= self.moveSpeed
 				self.Wall_on_Right = False
 				#self.Facing = 'Left'
 		
-		Terrain.adjust_offset()
+		self.adjust_offset(Terrain)
 		
 			
 	def update_frame(self, t):
 		if self.currentState == 'Jumping':
 			self.moveSpeed = self.JUMPSPEED
 			if self.RunBoost == True:
-				self.moveSpeed += WINDOWWIDTH / 400
+				self.moveSpeed += self.WINDOWWIDTH / 400
 		elif self.currentState == 'Jumping' and self.JumpHeight == 120:
 			self.moveSpeed = self.WALKSPEED
 		elif self.currentState == 'Walking':
@@ -239,3 +241,8 @@ class Player():
 				self.currentFrame = 'Left_N'
 			self.Animations['moveRight_pointer'] = 0
 			self.Animations['moveLeft_pointer'] = 0
+			
+	def adjust_offset(self, TERRAIN):
+		if TERRAIN.Position_Pointer != 0 and TERRAIN.Position_Pointer < (len(TERRAIN.List_of_Tops) * TERRAIN.SIZE_ON_SCREEN[0]) - self.WINDOWWIDTH:
+			self.X = self.WINDOWWIDTH / 2 - self.Width
+	
