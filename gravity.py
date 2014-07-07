@@ -51,7 +51,7 @@ def makePlayerFall(Object, Terrain, LIST_OF_OBJECTS, LIST_OF_ENEMIES):
 				# print ("on next")
 				if Object.JumpHeight == 0 or Object.JumpHeight >= 120:
 					Object.Y = Terrain.Height - Terrain.List_of_Offsets[i + 1] - Object.Height
-				if Object.Jump == True and Object.JumpHeight >= 120:
+				if Object.JumpHeight >= 120:
 					Object.currentState = 'Waiting'
 					Object.Jump = False
 					Object.JumpHeight = 0
@@ -62,7 +62,7 @@ def makePlayerFall(Object, Terrain, LIST_OF_OBJECTS, LIST_OF_ENEMIES):
 				# print ("on before")
 				if Object.JumpHeight == 0 or Object.JumpHeight >= 120:
 					Object.Y = Terrain.Height - Terrain.List_of_Offsets[i - 1] - Object.Height
-				if Object.Jump == True and Object.JumpHeight >= 120:
+				if Object.JumpHeight >= 120:
 					Object.currentState = 'Waiting'
 					Object.Jump = False
 					Object.JumpHeight = 0
@@ -72,10 +72,11 @@ def makePlayerFall(Object, Terrain, LIST_OF_OBJECTS, LIST_OF_ENEMIES):
 			elif Object_on_Terrain == True:
 				# print ("on Terrain")
 				# print ("%i, %i" % (Terrain.Position_Pointer, i))
-				# Object.currentTileHeight = Terrain.Height - Terrain.List_of_Offsets[i]
+				Object.currentTileHeight = Terrain.Height - Terrain.List_of_Offsets[i]
+				Object.currentTile = i
 				if Object.JumpHeight == 0 or Object.JumpHeight >= 120:
 					Object.Y = Terrain.Height - Terrain.List_of_Offsets[i] - Object.Height
-				if Object.Jump == True and Object.JumpHeight >= 120:
+				if Object.JumpHeight >= 120:
 					Object.currentState = 'Waiting'
 					Object.Jump = False
 					Object.JumpHeight = 0

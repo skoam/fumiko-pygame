@@ -28,14 +28,6 @@ Just run:
 
 python master.py
 
-# HOW TO PLAY
-
-- Move with w,s,a,d
-- Jump with space
-- Add Objects: [g] for plants, [h] for a big enemy, [e] for a small enemy, [r] for rock
-- Manipulate the Terrain: [u] for reducing the current tile, [l] for raising the current tile
-- [backspace] shuffle all tile heights
-
 # What does it need?
 
 - More structure, better class management and some other programming improvements

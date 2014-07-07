@@ -16,6 +16,8 @@ class Object():
 		self.moveLeft = False
 		self.moveRight = False
 		self.moveUp = False
+		
+		self.currentTile = 0
 	
 	def build_rectangle(self):
 		Rectangle = pygame.Rect(self.X, self.Y, self.Width, self.Height)
