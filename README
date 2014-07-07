@@ -39,6 +39,7 @@ python master.py
 # What does it need?
 
 - More structure, better class management and some other programming improvements
+- Better folder management
 - More graphics & enemys
 - Gameplay elements
 - Story
