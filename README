@@ -1,9 +1,34 @@
-This is an open source Jump & Run project. 
+This is an open source Jump & Run / Platformer / Castlevania Clone project. 
 
 # It started as a game I wanted to create on my own but since it's 
 # not actively developed by myself anymore I'd like to release the source and graphics for everyone to use
 
-# What does it need now?
+# Just show me something!
+
+You can see some videos here:
+
+Latest: https://www.youtube.com/watch?v=0XixVkq3Iyg
+Second: https://www.youtube.com/watch?v=0XixVkq3Iyg
+First: https://www.youtube.com/watch?v=0XixVkq3Iyg
+
+# INSTALLATION
+
+- You'll need python and pygame for this
+
+http://www.pygame.org/
+
+Windows and Mac users download it here: http://www.pygame.org/download.shtml
+Linux users can install it with their package manager like apt-get oder yum or anything like that.
+
+example: sudo apt-get install python pygame
+
+# RUNNING THE GAME
+
+Just run:
+
+python master.py
+
+# What does it need?
 
 - More structure, better class management and some other programming improvements
 - More graphics & enemys
