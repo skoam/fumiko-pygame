@@ -55,3 +55,9 @@ python master.py
 - simple enemy class
 
 I'm inviting everyone to contribute or fork or do whatever you want. It's open source now.
+
+# Other useful info that probably needs its own files
+
+charset: 24 x 32
+chipset: 32 x 32 (one rectangle for top, one rectangle for fill.)
+objects: doesn't matter, use object.sprite.get_width() and object.sprite.get_height() to get their size.
