@@ -10,6 +10,7 @@ class Player():
 		self.WALKSPEED = 2 # default walkspeed
 		self.RUNSPEED = 4 # default runspeed
 		self.JUMPSPEED = 3 # default jumpspeed
+		self.RUNBOOSTSPEED = 5 # default runboost
 	
 		self.AnimationSpeed = 100
 	
@@ -26,6 +27,7 @@ class Player():
 	
 		self.Weight = 5 # For Gravity
 		self.currentTileHeight = 0 # TILE the player stands on
+		self.currentTile = 0
 	
 		self.moveDown = False
 		self.moveUp = False
@@ -87,16 +89,17 @@ class Player():
 					self.currentFrame = 'Jump_Before_L'
 					
 				if self.JumpHeight < 60:
-					if self.RunBoost == True:
-						self.Y -= 7 * (float(self.WINDOWWIDTH) / 800)
-					self.Y -= 18 * (float(self.WINDOWHEIGHT) / 600)
-					self.JumpHeight += 10
-				elif self.JumpHeight < 90:
-					self.Y -= 15 * (float(self.WINDOWHEIGHT) / 600)
-					self.JumpHeight += 5
+					self.Y -= 22 * (float(self.WINDOWHEIGHT) / 600)
+					self.JumpHeight += 20
+				elif self.JumpHeight < 100:
+					self.Y -= 16 * (float(self.WINDOWHEIGHT) / 600)
+					self.JumpHeight += 20
 				elif self.JumpHeight < 120:
 					self.Y -= 12 * (float(self.WINDOWHEIGHT) / 600)
-					self.JumpHeight += 4
+					if self.RunBoost:
+						self.JumpHeight += 2
+					else:
+						self.JumpHeight += 4
 			else:
 				if self.Facing == 'Right':
 					self.currentFrame = 'Jump_After_R'
@@ -151,7 +154,10 @@ class Player():
 			if self.RunBoost == True:
 				self.moveSpeed += self.WINDOWWIDTH / 400
 		elif self.currentState == 'Jumping' and self.JumpHeight == 120:
-			self.moveSpeed = self.WALKSPEED
+			if not self.RunBoost:
+				self.moveSpeed = self.WALKSPEED
+			else:
+				self.moveSpeed = self.RUNBOOSTSPEED
 		elif self.currentState == 'Walking':
 			self.moveSpeed = self.WALKSPEED
 		elif self.currentState == 'Running':
@@ -225,6 +231,12 @@ class Player():
 			""" Animation for Running stops here """
 		if self.currentState == 'Jumping':
 			# Animation for Jump starts here 
+			
+			if self.JumpHeight < 120:
+				if self.Facing == 'Right':
+					self.currentFrame = 'Jump_Before_R'
+				elif self.Facing == 'Left':
+					self.currentFrame = 'Jump_Before_L'
 			
 			if not (self.moveRight and self.moveLeft):
 				if self.moveRight:

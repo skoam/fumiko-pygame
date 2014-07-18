@@ -118,6 +118,7 @@ def main():
 	Fumiko.WALKSPEED = WINDOWWIDTH / 160
 	Fumiko.RUNSPEED = WINDOWWIDTH / 80
 	Fumiko.JUMPSPEED = WINDOWWIDTH / 100
+	Fumiko.RUNBOOSTSPEED = Fumiko.RUNSPEED * 2
 	
 	# Positioning
 	Fumiko.X = 20
@@ -184,11 +185,6 @@ def main():
 
 	currentPlayer = Fumiko # Setting Fumiko as the controllable Player
 	
-	################## ENEMIES #####################
-	
-	# add_objects('Enemy_Turtle')
-	# add_objects('Enemy_Turtle')
-	
 	####################### OBJECTS ########################
 	
 	while True: # MAIN GAME LOOP
@@ -205,6 +201,7 @@ def main():
 					currentPlayer.Y -= 5
 					if currentPlayer.currentState == 'Running' and currentPlayer.RunBoost_Count	== 10:
 						currentPlayer.RunBoost = True
+						currentPlayer.moveSpeed = currentPlayer.RUNBOOSTSPEED
 						currentPlayer.RunBoost_Count = 0
 					currentPlayer.Jump = True
 					currentPlayer.currentState = 'Jumping'
@@ -232,6 +229,10 @@ def main():
 					add_objects('Enemy_Turtle')
 				if event.key == K_h:
 					add_objects('Enemy_Human_Mushroom')
+				if event.key == K_l:
+					Level1.List_of_Offsets[currentPlayer.currentTile] += 10
+				if event.key == K_u:
+					Level1.List_of_Offsets[currentPlayer.currentTile] -= 10
 					
 			elif event.type == KEYUP:
 				if (event.key == K_SPACE and currentPlayer.currentState == 'Jumping' and
@@ -239,7 +240,7 @@ def main():
 					# Make Player fall when SPACE key is released
 					SPACE_KEY_TIMER_BEFORE = SPACE_KEY_TIMER_AFTER
 					if pygame.time.get_ticks() > SPACE_KEY_TIMER_BEFORE + 500:
-						currentPlayer.JumpHeight = 100
+						currentPlayer.JumpHeight = 110
 					SPACE_KEY_TIMER_AFTER = pygame.time.get_ticks()
 					
 		# Getting the pressed keys and save them in a list []
@@ -416,7 +417,12 @@ def add_objects(name):
 		# Giving the Enemy class the display resolution for calculation
 		Monster.WINDOWWIDTH = WINDOWWIDTH
 		Monster.WINDOWHEIGHT = WINDOWHEIGHT
-		
+		# Scaling the Speeds to a proper value
+		Monster.WALKSPEED = WINDOWWIDTH / 160
+		Monster.RUNSPEED = WINDOWWIDTH / 80
+		Monster.JUMPSPEED = WINDOWWIDTH / 100
+		# Setting starting moveSpeed
+		Monster.moveSpeed = Monster.WALKSPEED / 2
 		# Monster starting position
 		# Monster.X = random.randrange(0, WINDOWWIDTH)
 		Monster.X = PLAYER_LIST[0].X
@@ -461,7 +467,7 @@ def add_objects(name):
 		Monster.Weight = Monster.Weight * (float(WINDOWHEIGHT / 600)) # scaling the default weight to the display resolution
 		
 		# Setting the Starting State of the Monster
-		Monster.set_state('Waiting')
+		Monster.set_state('Walking')
 		
 		# Setting the AI type
 		Monster.AI_type = 'walk_to_next_wall'
@@ -473,7 +479,14 @@ def add_objects(name):
 		# Giving the enemy class the WINDOWWIDTH and WINDOWHEIGHT for calculation
 		Mushroom.WINDOWWIDTH = WINDOWWIDTH
 		Mushroom.WINDOWHEIGHT = WINDOWHEIGHT
-		
+		# Scaling the Speeds to a proper value
+		Mushroom.WALKSPEED = WINDOWWIDTH / 160
+		Mushroom.RUNSPEED = WINDOWWIDTH / 80
+		Mushroom.JUMPSPEED = WINDOWWIDTH / 100
+		# Animationsspeed
+		Mushroom.AnimationSpeed = 150
+		# Setting starting moveSpeed
+		Mushroom.moveSpeed = Mushroom.WALKSPEED / 4
 		# Setting the enemy to a random position
 		#Mushroom.X = random.randrange(0, WINDOWWIDTH)
 		Mushroom.X = PLAYER_LIST[0].X
@@ -488,7 +501,28 @@ def add_objects(name):
 		Mushroom.Height = 64
 		
 		# Cutting out frames from the Charset
-		Mushroom.Frame_Dict['Right_N'] = Mushroom.Charset.subsurface(Mushroom.build_frame(64, 0))
+		Mushroom.Frame_Dict['Right_A'] = Mushroom.Charset.subsurface(Mushroom.build_frame(0, 64))
+		Mushroom.Frame_Dict['Right_N'] = Mushroom.Charset.subsurface(Mushroom.build_frame(64, 64))
+		Mushroom.Frame_Dict['Right_B'] = Mushroom.Charset.subsurface(Mushroom.build_frame(128, 64))
+		Mushroom.Frame_Dict['Left_A'] = pygame.transform.flip(Mushroom.Frame_Dict['Right_A'], True, False)
+		Mushroom.Frame_Dict['Left_N'] = pygame.transform.flip(Mushroom.Frame_Dict['Right_N'], True, False)
+		Mushroom.Frame_Dict['Left_B'] = pygame.transform.flip(Mushroom.Frame_Dict['Right_B'], True, False)
+		Mushroom.Frame_Dict['Right_wait_A'] = Mushroom.Charset.subsurface(Mushroom.build_frame(0, 0))
+		Mushroom.Frame_Dict['Right_wait_N'] = Mushroom.Charset.subsurface(Mushroom.build_frame(64, 0))
+		Mushroom.Frame_Dict['Right_wait_B'] = Mushroom.Charset.subsurface(Mushroom.build_frame(128, 0))
+		Mushroom.Frame_Dict['Left_wait_A'] = pygame.transform.flip(Mushroom.Frame_Dict['Right_wait_A'], True, False)
+		Mushroom.Frame_Dict['Left_wait_N'] = pygame.transform.flip(Mushroom.Frame_Dict['Right_wait_N'], True, False)
+		Mushroom.Frame_Dict['Left_wait_B'] = pygame.transform.flip(Mushroom.Frame_Dict['Right_wait_B'], True, False)
+		
+		Mushroom.Animations['moveRight'] = ['Right_B', 'Right_N', 'Right_A', 'Right_N']
+		Mushroom.Animations['moveLeft'] = ['Left_A', 'Left_N', 'Left_B', 'Left_N']
+		Mushroom.Animations['waitRight'] = ['Right_wait_A', 'Right_wait_N', 'Right_wait_B', 'Right_wait_N']
+		Mushroom.Animations['waitLeft'] = ['Left_wait_A', 'Left_wait_N', 'Left_wait_B', 'Left_wait_N']
+		
+		Mushroom.Animations['moveRight_pointer'] = 0
+		Mushroom.Animations['moveLeft_pointer'] = 0
+		Mushroom.Animations['waitRight_pointer'] = 0
+		Mushroom.Animations['waitLeft_pointer'] = 0
 		
 		Mushroom.Width = Mushroom.Width * scale_X
 		Mushroom.Height = Mushroom.Height * scale_Y
@@ -497,9 +531,10 @@ def add_objects(name):
 			Mushroom.Frame_Dict[FRAME] = pygame.transform.scale(Mushroom.Frame_Dict[FRAME], (Mushroom.Width, Mushroom.Height))
 		
 		# Starting frame for the Enemy
-		Mushroom.currentFrame = 'Right_N'
+		Mushroom.currentFrame = 'Right_wait_N'
 		Mushroom.Facing = 'Right'
 		Mushroom.set_state('Waiting')
+		Mushroom.moves = 0
 		
 		Mushroom.Rect = Mushroom.build_rectangle()
 		
@@ -507,7 +542,7 @@ def add_objects(name):
 		Mushroom.Weight = Mushroom.Weight * (float(WINDOWHEIGHT / 600)) # scaling the default weight to the display resolution
 		
 		# Setting the AI type
-		Mushroom.AI_type = 'none'
+		Mushroom.AI_type = 'standing and waiting'
 		
 		LIST_OF_ENEMIES.append(Mushroom)
 		
