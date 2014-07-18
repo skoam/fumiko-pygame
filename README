@@ -1,1 +1,23 @@
-This is an open source Jump & Run project. I'll share the source code with everyone, but I'm not planning on releasing the graphics. However I'll put some template graphics for the charset and chipset in the repository for people to make their own graphics soon.
+This is an open source Jump & Run project. 
+
+# It started as a game I wanted to create on my own but since it's 
+# not actively developed by myself anymore I'd like to release the source and graphics for everyone to use
+
+# What does it need now?
+
+- More structure, better class management and some other programming improvements
+- More graphics & enemys
+- Gameplay elements
+- Story
+- and much more
+
+# What has it already?
+
+- A complete Animation set of the main character with running, jumping, knife swings
+- Some enemies with basic animation sets
+- some tiles
+- Map Generator
+- simple object class
+- simple enemy class
+
+I'm inviting everyone to contribute or fork or do whatever you want. It's open source now.
