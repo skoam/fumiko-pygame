@@ -1,0 +1,14 @@
+# All preset Level Settings come in a python dictionary
+{
+	'name': "First level",
+	'tileset': "./images/chipset/Chipset_1.png",
+	'heightmap': "0145742345123456122223838303039393434",
+	'terrainmap': "0000000000000000000000000000000000000",
+	'tile_width': 32,
+	'gobjects': {
+		'rock': {
+			'position': 3,
+			'image': "rock", 'size': [32, 32],
+			'behavior': "./path/to/script.dict"
+		}}
+}
