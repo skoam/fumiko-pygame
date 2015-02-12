@@ -1,4 +1,4 @@
-# All preset Level Settings come in a python dictionary
+# All preset player settings come in a python dictionary
 {
 	'name': "Fumiko",
 	'charset': "./images/charset/Fumiko.png",
