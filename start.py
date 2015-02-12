@@ -4,9 +4,9 @@
 
 import sys
 import pygame
-import level
-import player
-from manage_game import game
+import Classes.level as level
+import Classes.player as player
+from Classes.manage_game import game
 
 
 def main():
