@@ -4,5 +4,5 @@
 	'charset': "./images/charset/Fumiko.png",
 	'tile_size': Size(24, 32),
 	'scale': 1,
-	'position': Position(100, 100)
+	'position': Position(150, 100)
 }
