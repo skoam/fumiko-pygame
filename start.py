@@ -13,7 +13,7 @@ def main():
     game.manages_levels = level.ManagesLevels()
     game.manages_players = player.ManagesPlayers()
     game.start()
-    game.initialize_controllers()
+    game.input.initialize_controllers()
     while True:  # main game loop
         game.loop()
 
