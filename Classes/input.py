@@ -1,3 +1,4 @@
+import actions
 import pygame
 from common import debug
 
@@ -6,19 +7,8 @@ class ManagesInput:
     def __init__(self):
         self.joysticks = None
         self.input_source = None
-
-        self.input = {
-            'up': None,
-            'down': None,
-            'left': None,
-            'right': None
-        }
-
-        self.input_config = {
-            '0': 'B',
-            '1': 'A',
-            '2': 'C'
-        }
+        self.actions = actions.ActionSet()
+        self.buttons_pressed = []
 
     def initialize_controllers(self):
         pygame.joystick.init()
@@ -35,10 +25,18 @@ class ManagesInput:
             self.input_source = 'keyboard'
             debug(self.input_source, "No joystick, using keyboard as default input")
 
-        if self.input_source.init:
+        init_controller = getattr(self.input_source, "init", None)
+        if callable(init_controller):
             self.input_source.init()
 
     def get_input(self):
         if self.input_source and self.input_source.get_button:
-            if self.input_source.get_button(0) == 1:
-                debug(self.input_config['0'], "button is pressed")
+            for action in self.actions.current():
+                if (not self.buttons_pressed.__contains__(action) and action != 'name' and
+                        self.input_source.get_button(self.actions.current()[action]) == 1):
+                    debug(action, "button is pressed")
+                    self.buttons_pressed.append(action)
+                elif (self.buttons_pressed.__contains__(action) and action != 'name' and
+                        self.input_source.get_button(self.actions.current()[action]) == 0):
+                    debug(action, "button was released")
+                    self.buttons_pressed.remove(action)

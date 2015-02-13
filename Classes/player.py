@@ -37,10 +37,10 @@ class Player:
         if not self.representation:
             actual_object_size = Size(self.settings["tile_size"].width *
                                       self.settings["scale"] *
-                                      game.settings.screen["scale"],
+                                      game.settings.get('screen')["scale"],
                                       self.settings["tile_size"].height *
                                       self.settings["scale"] *
-                                      game.settings.screen["scale"])
+                                      game.settings.get('screen')["scale"])
             self.representation = gameobject.GameObject(self.settings["name"],
                                                         self.settings["position"],
                                                         actual_object_size,
@@ -65,7 +65,7 @@ class Player:
                 ))
 
                 tile_rect = subsurface.get_rect()
-                scale = game.settings.screen["scale"]
+                scale = game.settings.get('screen')["scale"]
                 subsurface = pygame.transform.scale(subsurface, (tile_rect.width * scale, tile_rect.height * scale))
                 self.charset_list.append(subsurface)
 

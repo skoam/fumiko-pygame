@@ -23,7 +23,7 @@ class ManagesLevels:
             level.terrainmap = level.settings["terrainmap"]
             if "tile_width" in level.settings:
                 level.tile_width = int(level.settings["tile_width"])
-            if game.settings.debug:
+            if game.settings.get('debug')['on']:
                 debug(level.settings, "Loaded Level " + level_name)
             for object_name, object_settings in level.settings["gobjects"].items():
                 gobject_from_level_dict = game.add(
@@ -54,7 +54,7 @@ class Level:
         self.heightmap = None
         self.terrainmap = None
         self.tileset = None
-        self.tile_width = game.settings.levels["default_tile_width"]
+        self.tile_width = game.settings.get('levels')["default_tile_width"]
         self.terrains = []
         self.settings = read_dict_from_file(folder + "/settings.dict")
 
@@ -74,7 +74,7 @@ class Level:
                 self.tile_width * i, 0, self.tile_width, chipset_rect.height
             ))
             tile_rect = subsurface.get_rect()
-            scale = game.settings.screen["scale"]
+            scale = game.settings.get("screen")["scale"]
             subsurface = pygame.transform.scale(subsurface, (tile_rect.width * scale, tile_rect.height * scale))
             self.terrains.append(subsurface)
         debug(self.terrains, "Created " + str(number_of_possible_slices) + " Tiles from " + self.tileset)
