@@ -9,7 +9,6 @@
     'RB': 5,
     'Select': 6,
     'LB': 4,
-    'LT': 8,
     'Left_Stick': 9,
     'Right_Stick': 10,
     'left': -1,
@@ -20,5 +19,7 @@
     'Analog_Y': 1,
     'Analog_View_X': 2,
     'Analog_View_Y': 3,
-    'invert_Y': 0
+    'invert_Y': 0,
+    'LT': 4,
+    'RT': 5
 }
