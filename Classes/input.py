@@ -9,6 +9,7 @@ class ManagesInput:
         self.input_source = None
         self.actions = actions.ActionSet()
         self.buttons_pressed = []
+        self.axis_values = {}
 
     def initialize_controllers(self):
         pygame.joystick.init()
@@ -28,15 +29,64 @@ class ManagesInput:
         init_controller = getattr(self.input_source, "init", None)
         if callable(init_controller):
             self.input_source.init()
+            debug(self.input_source.get_numbuttons(), "Available buttons for joystick")
 
     def get_input(self):
         if self.input_source and self.input_source.get_button:
             for action in self.actions.current():
-                if (not self.buttons_pressed.__contains__(action) and action != 'name' and
-                        self.input_source.get_button(self.actions.current()[action]) == 1):
-                    debug(action, "button is pressed")
-                    self.buttons_pressed.append(action)
-                elif (self.buttons_pressed.__contains__(action) and action != 'name' and
-                        self.input_source.get_button(self.actions.current()[action]) == 0):
-                    debug(action, "button was released")
-                    self.buttons_pressed.remove(action)
+                if action not in ['name', 'hat', 'invert_Y']:
+                    if not self.buttons_pressed.__contains__(action):
+                        if action not in ['left', 'right', 'up', 'down',
+                                          'Analog_X', 'Analog_Y', 'Analog_View_X', 'Analog_View_Y']:
+                            if self.input_source.get_button(self.actions.current()[action]) == 1:
+                                debug(action, "button is pressed")
+                                self.buttons_pressed.append(action)
+                        elif action not in ['Analog_X', 'Analog_Y', 'Analog_View_X', 'Analog_View_Y']:
+                            hat = self.input_source.get_hat(0)
+                            if action == 'left':
+                                if hat[0] == -1:
+                                    self.buttons_pressed.append(action)
+                                    debug(action, "button is pressed")
+                            elif action == 'right':
+                                if hat[0] == 1:
+                                    self.buttons_pressed.append(action)
+                                    debug(action, "button is pressed")
+                            elif action == 'up':
+                                if hat[1] == 1:
+                                    self.buttons_pressed.append(action)
+                                    debug(action, "button is pressed")
+                            elif action == 'down':
+                                if hat[1] == -1:
+                                    self.buttons_pressed.append(action)
+                                    debug(action, "button is pressed")
+                        else:
+                            axis = self.input_source.get_axis(self.actions.current()[action])
+                            if abs(axis) > 0.2:
+                                self.axis_values[action] = axis
+                                debug(action + ":" + str(axis), "Axis is moved")
+                            else:
+                                self.axis_values[action] = 0
+                    elif self.buttons_pressed.__contains__(action):
+                        if action not in ['left', 'right', 'up', 'down',
+                                          'Analog_X', 'Analog_Y', 'Analog_View_X', 'Analog_View_Y']:
+                            if self.input_source.get_button(self.actions.current()[action]) == 0:
+                                debug(action, "button was released")
+                                self.buttons_pressed.remove(action)
+                        elif action not in ['Analog_X', 'Analog_Y', 'Analog_View_X', 'Analog_View_Y']:
+                            hat = self.input_source.get_hat(0)
+                            if action == 'left':
+                                if hat[0] != -1:
+                                    self.buttons_pressed.remove(action)
+                                    debug(action, "button is released")
+                            elif action == 'right':
+                                if hat[0] != 1:
+                                    self.buttons_pressed.remove(action)
+                                    debug(action, "button is released")
+                            elif action == 'up':
+                                if hat[1] != 1:
+                                    self.buttons_pressed.remove(action)
+                                    debug(action, "button is released")
+                            elif action == 'down':
+                                if hat[1] != -1:
+                                    self.buttons_pressed.remove(action)
+                                    debug(action, "button is released")
