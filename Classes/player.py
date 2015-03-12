@@ -29,10 +29,16 @@ class Player:
         self.charset_list = None
         self.charset_lib = {}
         self.charset = {}
+        self.input = None
 
         self.slice_charset()
         self.spawn()
-
+    
+    def get_input(self):
+        self.input.get_input()
+        if self.input.buttons_pressed.__contains__("left"):
+            debug("Button Left pressed for player " + self.name)
+            
     def spawn(self):
         if not self.representation:
             actual_object_size = Size(self.settings["tile_size"].width *

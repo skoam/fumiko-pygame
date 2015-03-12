@@ -13,8 +13,6 @@ def main():
     game.manages_levels = level.ManagesLevels()
     game.manages_players = player.ManagesPlayers()
     game.start()
-    game.input.actions.load_set('xbox_controller')
-    game.input.initialize_controllers()
     while True:  # main game loop
         game.loop()
 

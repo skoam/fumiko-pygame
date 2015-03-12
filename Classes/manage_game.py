@@ -34,7 +34,7 @@ class ManagesSettings:
 class ManagesPygame:
     def __init__(self):
         self.settings = ManagesSettings()
-        self.input = input.ManagesInput()
+        self.input = []
         self.manages_levels = None
         self.manages_players = None
         self.game_objects = {}
@@ -96,7 +96,16 @@ class ManagesPygame:
                 self.terminate()
 
         pygame.display.update()
-        self.input.get_input()
+
+        for player_name in self.manages_players.players:
+            player = self.manages_players.players[player_name]
+            if player.input:
+                player.get_input()
+            else:
+                player.input = input.ManagesInput()
+                player.input.actions.load_set('xbox_controller')
+                player.input.initialize_controllers()
+                player.input.owner = player_name
 
         self.draw_screen()
         self.clock.tick(self.fps)

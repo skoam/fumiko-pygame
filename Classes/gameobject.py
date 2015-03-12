@@ -5,7 +5,7 @@ from common import random_id, Position, Size
 
 class GameObject:
     def __init__(self, name=None, position=None, size=None, image=None):
-        default_name = "gameobject-" + random_id()
+        default_name = "gameobject " + str(random_id())
         
         self.name = name if name is not None else default_name
 
