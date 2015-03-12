@@ -4,7 +4,7 @@ import images
 import os
 from common import Size, read_dict_from_file, debug
 from manage_game import game
-
+from physics import PhysicsController2D
 
 class ManagesPlayers:
     def __init__(self):
@@ -30,6 +30,7 @@ class Player:
         self.charset_lib = {}
         self.charset = {}
         self.input = None
+        self.physics = PhysicsController2D()
 
         self.slice_charset()
         self.spawn()
@@ -39,11 +40,15 @@ class Player:
         if self.input.buttons_pressed.__contains__("left"):
             self.representation.position.x -= 10
         if self.input.buttons_pressed.__contains__("right"):
-            self.representation.position.x += 10
+            self.physics.add_force(1450, 0, 50)
         if self.input.buttons_pressed.__contains__("up"):
             self.representation.position.y -= 10
         if self.input.buttons_pressed.__contains__("down"):
             self.representation.position.y += 10
+
+    def get_physics(self):
+        self.representation.position.x += self.physics.effect().x
+        self.representation.position.y += self.physics.effect().y
 
     def spawn(self):
         if not self.representation:

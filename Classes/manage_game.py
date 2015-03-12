@@ -34,7 +34,6 @@ class ManagesSettings:
 class ManagesPygame:
     def __init__(self):
         self.settings = ManagesSettings()
-        self.input = []
         self.manages_levels = None
         self.manages_players = None
         self.game_objects = {}
@@ -77,6 +76,17 @@ class ManagesPygame:
         for name, game_object in self.game_objects.items():
             game_object.update_rect() 
 
+    def update_players(self):
+        for player_name, player in self.manages_players.players.items():
+            if player.input:
+                player.get_input()
+            else:
+                player.input = input.ManagesInput()
+                player.input.actions.load_set('xbox_controller')
+                player.input.initialize_controllers()
+                player.input.owner = player_name
+            player.get_physics()
+
     def add(self, game_object):
         if game_object.name not in self.game_objects:
             self.game_objects[game_object.name] = game_object
@@ -105,22 +115,10 @@ class ManagesPygame:
 
         pygame.display.update()
 
-        for player_name in self.manages_players.players:
-            player = self.manages_players.players[player_name]
-            if player.input:
-                player.get_input()
-            else:
-                player.input = input.ManagesInput()
-                player.input.actions.load_set('xbox_controller')
-                player.input.initialize_controllers()
-                player.input.owner = player_name
-
+        self.update_players()
         self.update_objects()
         self.draw_screen()
         self.clock.tick(self.fps)
 
 
 game = ManagesPygame()
-
-
-
