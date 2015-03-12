@@ -78,7 +78,7 @@ class ManagesInput:
                         if action not in ['left', 'right', 'up', 'down',
                                           'Analog_X', 'Analog_Y', 'Analog_View_X', 'Analog_View_Y']:
                             if self.input_source.get_button(self.actions.current()[action]) == 0:
-                                debug(action, "button was released")
+                                # debug(action, "button was released")
                                 self.buttons_pressed.remove(action)
                         elif action not in ['Analog_X', 'Analog_Y', 'Analog_View_X', 'Analog_View_Y']:
                             hat = self.input_source.get_hat(0)

@@ -32,3 +32,6 @@ class GameObject:
     def chscale(self, scale):
         self.image = pygame.transform.scale(self.image, (self.size.width * scale, self.size.height * scale))
         self.rect = pygame.Rect(self.position.x, self.position.y, self.size.width * scale, self.size.height * scale)
+
+    def update_rect(self):
+        self.rect = pygame.Rect(self.position.x, self.position.y, self.size.width, self.size.height)

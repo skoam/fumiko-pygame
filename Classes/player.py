@@ -37,8 +37,14 @@ class Player:
     def get_input(self):
         self.input.get_input()
         if self.input.buttons_pressed.__contains__("left"):
-            debug("Button Left pressed for player " + self.name)
-            
+            self.representation.position.x -= 10
+        if self.input.buttons_pressed.__contains__("right"):
+            self.representation.position.x += 10
+        if self.input.buttons_pressed.__contains__("up"):
+            self.representation.position.y -= 10
+        if self.input.buttons_pressed.__contains__("down"):
+            self.representation.position.y += 10
+
     def spawn(self):
         if not self.representation:
             actual_object_size = Size(self.settings["tile_size"].width *

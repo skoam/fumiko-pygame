@@ -54,10 +54,9 @@ class ManagesPygame:
         pygame.display.set_caption('NoName Platformer')
 
     def draw_screen(self):
-        for name, game_object in self.game_objects.items():
-            self._display.blit(game_object.image, game_object.rect)
         if self.manages_levels:
             current_level = self.manages_levels.current_level
+            self._display.fill(pygame.Color(current_level.settings["background_color"]))
             tiles = current_level.populated
             for i in range(0, len(tiles)):
                 scale = self.settings.get('screen')['scale']
@@ -68,6 +67,15 @@ class ManagesPygame:
                 self._display.blit(tile_sprite, pygame.Rect(position.x,
                                                             position.y,
                                                             size.width, size.height))
+        else:
+            self._display.fill(pygame.Color("black"))
+
+        for name, game_object in self.game_objects.items():
+            self._display.blit(game_object.image, game_object.rect)
+
+    def update_objects(self):
+        for name, game_object in self.game_objects.items():
+            game_object.update_rect() 
 
     def add(self, game_object):
         if game_object.name not in self.game_objects:
@@ -107,6 +115,7 @@ class ManagesPygame:
                 player.input.initialize_controllers()
                 player.input.owner = player_name
 
+        self.update_objects()
         self.draw_screen()
         self.clock.tick(self.fps)
 

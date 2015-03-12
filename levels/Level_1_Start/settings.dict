@@ -1,6 +1,7 @@
 # All preset Level Settings come in a python dictionary
 {
 	'name': "First level",
+    'background_color': '#ffffff',
 	'tileset': "./images/chipset/Chipset_1.png",
 	'heightmap': "0145742345123456122223838303039393434",
 	'terrainmap': "0000000000000000000000000000000000000",
