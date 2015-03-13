@@ -43,6 +43,7 @@ class Player:
         if self.input.actions_active.__contains__("up"):
             self.representation.physics.add_force(0, -800, 0.2)
         if self.input.actions_active.__contains__("down"):
+            self.representation.physics.add_force(0, 800, 0.2)
             purpose = "action for down key here"
 
     def spawn(self):

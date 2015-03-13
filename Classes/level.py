@@ -28,7 +28,8 @@ class ManagesLevels:
             for object_name, object_settings in level.settings["gobjects"].items():
                 gobject_from_level_dict = game.add(
                     gameobject.GameObject(object_name,
-                                          Position(20, 20),
+                                          Position(object_settings['position'][0],
+                                                   object_settings['position'][1]),
                                           Size(object_settings["size"][0],
                                                object_settings["size"][1])))
                 gobject_from_level_dict.chimg(object_settings["image"])

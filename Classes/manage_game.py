@@ -40,6 +40,12 @@ class ManagesPygame:
 
         pygame.init()
         pygame.display.init()
+        
+        self.physics_controllers = None
+        def initialize_physics():
+            self.physics_controllers = []
+
+        initialize_physics()
 
         self.fps = self.settings.get('performance')['frames_per_second']
         self.clock = pygame.time.Clock()
@@ -86,6 +92,10 @@ class ManagesPygame:
                 player.input.initialize_controllers()
                 player.input.owner = player_name
 
+    def update_physics(self):
+        for controller in self.physics_controllers:
+            controller.check_for_collision()
+
     def add(self, game_object):
         if game_object.name not in self.game_objects:
             self.game_objects[game_object.name] = game_object
@@ -114,6 +124,7 @@ class ManagesPygame:
 
         pygame.display.update()
 
+        self.update_physics()
         self.update_players()
         self.update_objects()
         self.draw_screen()

@@ -107,12 +107,24 @@ class ManagesInput:
                                     # debug(action, "button is released")
         else:
             buttons = pygame.key.get_pressed()
-            pygame_keys = {
-                K_d: 'd',
-                K_a: 'a',
-                K_s: 's',
-                K_w: 'w'
-            }
+            pygame_keys = {K_d: 'd', K_a: 'a', K_s: 's', K_w: 'w', K_r: 'r',
+                           K_e: 'e', K_q: 'q', K_y: 'y', K_x: 'x', K_c: 'c',
+                           K_t: 't', K_z: 'z', K_u: 'u', K_i: 'i', K_o: 'o',
+                           K_p: 'p', K_f: 'f', K_g: 'g', K_h: 'h', K_j: 'j',
+                           K_k: 'k', K_l: 'l', K_v: 'v', K_b: 'b', K_n: 'n',
+                           K_m: 'm', K_SPACE: 'space', K_BACKSPACE: 'backspace',
+                           K_TAB: 'tab', K_CLEAR: 'clear', K_RETURN: 'return',
+                           K_PAUSE: 'pause', K_PLUS: '+', K_COMMA: ',',
+                           K_MINUS: '-', K_0: '0', K_1: '1', K_2: '2', K_3: '3',
+                           K_4: '4', K_5: '5', K_6: '6', K_7: '7', K_8: '8',
+                           K_9: '9', K_LESS: '<', K_CARET: '^', K_DELETE: 'del',
+                           K_UP: 'up', K_DOWN: 'down', K_LEFT: 'left', K_RIGHT: 'right',
+                           K_INSERT: 'insert', K_HOME: 'home', K_END: 'end',
+                           K_PAGEUP: 'p_up', K_PAGEDOWN: 'p_down', K_LSHIFT: 'l_shift',
+                           K_RSHIFT: 'r_shift', K_LCTRL: 'l_ctrl', K_RCTRL: 'r_ctrl',
+                           K_LALT: 'l_alt', K_RALT: 'r_alt', K_LSUPER: 'l_super',
+                           K_RSUPER: 'r_super'}
+
             for key, value in pygame_keys.items():
                 if buttons[key] and not self.buttons_pressed.__contains__(value):
                     self.buttons_pressed.append(value)

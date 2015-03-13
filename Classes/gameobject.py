@@ -9,9 +9,8 @@ class GameObject:
         default_name = "gameobject " + str(random_id())
         
         self.name = name if name is not None else default_name
-        self.physics = physics.PhysicsController2D()
 
-        def sizeAndPosition():
+        def size_and_position():
           self.position = position if position is not None else Position(0, 0)
           self.size = size if size is not None else Size(0, 0)
 
@@ -25,8 +24,12 @@ class GameObject:
           self.rect = pygame.Rect(self.position.x, self.position.y, self.size.width, self.size.height)
           self.color = False
 
-        sizeAndPosition()
+        def add_physics_controller():
+            self.physics = physics.PhysicsController2D(self.rect)
+
+        size_and_position()
         define_image()
+        add_physics_controller()
 
     def get_physics(self):
         self.position.x += self.physics.effect().x
@@ -41,3 +44,4 @@ class GameObject:
 
     def update_rect(self):
         self.rect = pygame.Rect(self.position.x, self.position.y, self.size.width, self.size.height)
+        self.physics.collider = self.rect
