@@ -37,14 +37,14 @@ class Player:
     
     def get_input(self):
         self.input.get_input()
-        if self.input.buttons_pressed.__contains__("left"):
-            self.physics.add_force(-500, 0, 1.2)
-        if self.input.buttons_pressed.__contains__("right"):
-            self.physics.add_force(500, 0, 1.2)
-        if self.input.buttons_pressed.__contains__("up"):
-            self.physics.add_force(0, -500, 1.2)
-        if self.input.buttons_pressed.__contains__("down"):
-            self.physics.add_force(0, 500, 1.2)
+        if self.input.actions_active.__contains__("left"):
+            self.representation.physics.add_force(-500, 0, 1.2)
+        if self.input.actions_active.__contains__("right"):
+            self.representation.physics.add_force(500, 0, 1.2)
+        if self.input.actions_active.__contains__("up"):
+            self.representation.physics.add_force(0, -800, 0.2)
+        if self.input.actions_active.__contains__("down"):
+            purpose = "action for down key here"
 
     def get_physics(self):
         self.representation.position.x += self.physics.effect().x

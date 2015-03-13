@@ -22,8 +22,8 @@ class PhysicsController2D:
         self.gravity = -9.81
         self.forces = []
         self.reduce_factor = 1.1
-        self.effect_factor = 0.05
-        self.gravity_factor = 0
+        self.effect_factor = 0.02
+        self.gravity_factor = 10
         self.minimum_force = 0.00000000000000001
 
     def update_forces(self):
@@ -41,7 +41,7 @@ class PhysicsController2D:
 
             if force.x + force.y == 0:
                 i -= 1
-                self.forces.pop(i)
+                self.forces.remove(force)
 
     def effect(self):
         self.update_forces()

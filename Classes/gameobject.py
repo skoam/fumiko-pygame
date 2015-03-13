@@ -1,5 +1,6 @@
 import images
 import pygame
+import physics
 from common import random_id, Position, Size
 
 
@@ -8,6 +9,7 @@ class GameObject:
         default_name = "gameobject " + str(random_id())
         
         self.name = name if name is not None else default_name
+        self.physics = physics.PhysicsController2D()
 
         def sizeAndPosition():
           self.position = position if position is not None else Position(0, 0)
@@ -25,6 +27,10 @@ class GameObject:
 
         sizeAndPosition()
         define_image()
+
+    def get_physics(self):
+        self.position.x += self.physics.effect().x
+        self.position.y += self.physics.effect().y
 
     def chimg(self, img):
         self.image = images.get_image(images.resources[img])

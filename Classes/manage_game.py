@@ -74,7 +74,8 @@ class ManagesPygame:
 
     def update_objects(self):
         for name, game_object in self.game_objects.items():
-            game_object.update_rect() 
+            game_object.update_rect()
+            game_object.get_physics()
 
     def update_players(self):
         for player_name, player in self.manages_players.players.items():
@@ -82,10 +83,8 @@ class ManagesPygame:
                 player.get_input()
             else:
                 player.input = input.ManagesInput()
-                player.input.actions.load_set('xbox_controller')
                 player.input.initialize_controllers()
                 player.input.owner = player_name
-            player.get_physics()
 
     def add(self, game_object):
         if game_object.name not in self.game_objects:
