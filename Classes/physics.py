@@ -2,10 +2,11 @@ import pygame
 from common import Position, debug
 
 class Force:
-    def __init__(self, x, y, damp):
+    def __init__(self, x, y, damp=None, name=None):
        self.x = x
        self.y = y
-       self.damp = 0
+       self.damp = damp if damp is not None else 0
+       self.name = name if name is not None else ""
 
 class Effect:
     def __init__(self, x, y):
@@ -20,20 +21,22 @@ class PhysicsController2D:
     def __init__(self):
         self.gravity = -9.81
         self.forces = []
-        self.reduce_factor = 100
-        self.effect_factor = 0.0125
+        self.reduce_factor = 1.1
+        self.effect_factor = 0.05
+        self.gravity_factor = 0
+        self.minimum_force = 0.00000000000000001
 
     def update_forces(self):
         for i in range(len(self.forces)):
             if i >= len(self.forces):
                 return
             force = self.forces[i]
-            force.x -= force.damp + self.reduce_factor
-            force.y -= force.damp + self.reduce_factor
+            force.x = force.x / (force.damp + self.reduce_factor)
+            force.y = force.y / (force.damp + self.reduce_factor)
             
-            if force.x < 0:
+            if abs(force.x) < self.minimum_force:
                 force.x = 0
-            if force.y < 0:
+            if abs(force.y) < self.minimum_force:
                 force.y = 0
 
             if force.x + force.y == 0:
@@ -46,8 +49,8 @@ class PhysicsController2D:
         for force in self.forces:
             effect.x += force.x 
             effect.y += force.y
+        effect.y -= self.gravity * self.gravity_factor
         effect.multiply(self.effect_factor)
-        debug(effect)
         return effect 
 
     def add_force(self, x, y, damp):
