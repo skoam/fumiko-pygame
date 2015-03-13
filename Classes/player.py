@@ -30,7 +30,6 @@ class Player:
         self.charset_lib = {}
         self.charset = {}
         self.input = None
-        self.physics = PhysicsController2D()
 
         self.slice_charset()
         self.spawn()
@@ -45,10 +44,6 @@ class Player:
             self.representation.physics.add_force(0, -800, 0.2)
         if self.input.actions_active.__contains__("down"):
             purpose = "action for down key here"
-
-    def get_physics(self):
-        self.representation.position.x += self.physics.effect().x
-        self.representation.position.y += self.physics.effect().y
 
     def spawn(self):
         if not self.representation:
