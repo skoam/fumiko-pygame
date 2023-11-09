@@ -1,0 +1,36 @@
+# All preset Level Settings come in a python dictionary
+{
+	'name': "First level",
+    'background_color': '#ffffff',
+	'tileset': "./images/chipset/Chipset_1.png",
+	'heightmap': "0145742345123456122223838303039393434",
+	'terrainmap': "0000000000000000000000000000000000000",
+	'tile_width': 32,
+	'gobjects': {
+		'rock_0': {
+			'position':  [20, 20],
+			'image': "rock", 'size': [32, 32],
+			'behavior': "./path/to/script.dict"
+		}, 
+        'rock_1': {
+			'position': [140, 20],
+			'image': "rock", 'size': [32, 32],
+			'behavior': "./path/to/script.dict"
+		},
+        'rock_2': {
+			'position': [240, 20],
+			'image': "rock", 'size': [32, 32],
+			'behavior': "./path/to/script.dict"
+		},
+        'rock_3': {
+			'position': [340, 20],
+			'image': "rock", 'size': [32, 32],
+			'behavior': "./path/to/script.dict"
+		},
+        'rock_4': {
+			'position': [440, 20],
+			'image': "rock", 'size': [32, 32],
+			'behavior': "./path/to/script.dict"
+		}
+    }
+}

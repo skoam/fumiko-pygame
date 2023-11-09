@@ -1,0 +1,25 @@
+# This file contains an actions set linkable to keyboard / joystick input
+{
+    'name': 'default',
+    'A': 0,
+    'B': 1,
+    'X': 2,
+    'Y': 3,
+    'Start': 7,
+    'RB': 5,
+    'Select': 6,
+    'LB': 4,
+    'Left_Stick': 9,
+    'Right_Stick': 10,
+    'left': -1,
+    'right': 1,
+    'up': -1,
+    'down': 1,
+    'Analog_X': 0,
+    'Analog_Y': 1,
+    'Analog_View_X': 2,
+    'Analog_View_Y': 3,
+    'invert_Y': 0,
+    'LT': 4,
+    'RT': 5
+}

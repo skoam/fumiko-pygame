@@ -1,0 +1,11 @@
+# This file contains the default mappings for xbox_controllers  
+{
+    'name': 'default xbox controller mappings',
+    'left': 'left',
+    'right': 'right',
+    'up': 'up',
+    'down': 'down',
+    'jump': 'A',
+    'attack': 'X',
+    'special: 'Y'
+}
