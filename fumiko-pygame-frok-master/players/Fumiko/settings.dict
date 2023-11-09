@@ -1,0 +1,8 @@
+# All preset player settings come in a python dictionary
+{
+	'name': "Fumiko",
+	'charset': "./images/charset/Fumiko.png",
+	'tile_size': Size(24, 32),
+	'scale': 1,
+	'position': Position(150, 100)
+}

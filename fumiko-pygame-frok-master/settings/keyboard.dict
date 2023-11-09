@@ -1,0 +1,11 @@
+# default action map for keyboard input
+{
+    'name': 'default keyboard mapping',
+    'left': 'a',
+    'right': 'd',
+    'up': 'w',
+    'down': 's',
+    'jump': 'space',
+    'attack': 'f',
+    'special': 'e'
+} 

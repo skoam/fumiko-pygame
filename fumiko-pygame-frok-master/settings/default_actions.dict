@@ -1,0 +1,11 @@
+# This file contains an actions set linkable to keyboard / joystick input
+{
+    'name': 'default',
+    'up': 0,
+    'down': 1,
+    'left': 2,
+    'right': 3,
+    'jump': 4,
+    'run': 5,
+    'attack': 6
+}
